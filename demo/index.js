@@ -12,6 +12,7 @@ var App = React.createClass ({
 		}
 	},
 	componentDidMount: function () {
+		//给数据加上是否被邀请属性
 		var data = this.props.data.invited;
 		data.map((item, index) => {
 			item.invited = false;
@@ -20,8 +21,10 @@ var App = React.createClass ({
 			list: data
 		});
 	},
+	//按钮点击事件
 	onChangeInvited: function (id) {
 		var list = this.props.data.invited;
+		//通过筛选，将属性掷反
 		list.map((item) => {
 			if (item.id === id) {
 				item.invited = !item.invited;
@@ -31,6 +34,7 @@ var App = React.createClass ({
 			list: list
 		})
 	},
+	//搜索框事件
 	onFilterText: function (text) {
 		this.setState({
 			filterText: text
@@ -39,7 +43,9 @@ var App = React.createClass ({
 	render: function () {
 		var data = this.props.data;
 		var filterData = data;
+		//判断搜索框中是否有文字
 		if (this.state.filterText) {
+			//因为对象是引用值所以需要重新给filterData赋值，否则会改变原有data对象里的数据
 			filterData = {};
 			filterData.invited = data.invited.filter((item, key) => {
 				return item.name.indexOf(this.state.filterText) !== -1
@@ -53,6 +59,8 @@ var App = React.createClass ({
 		)
 	}
 })
+
+//因为没有后台接口，就把数据放本地了
 var data = {
 	'invited':[
 		{
